@@ -1,0 +1,54 @@
+.memories{
+	width: 1000px;
+    margin: 0 auto 20px;
+}
+
+
+.memory_main{
+    background: #423b3b;
+    box-shadow: 0px 1px 0px rgba(255,255,255,.1), inset 0px 1px 1px rgba(8, 8, 8, 0.7);
+    width: 650px;
+    height: 1100px;
+    color: #b9b9b9;
+    border-radius: 6px;
+    position: relative;
+    padding: 10px;
+}
+.memories li{
+	display: list-item;
+    text-align: -webkit-match-parent;
+}
+.line1{
+    margin-top: 50px;
+    float: left;
+    position: relative;
+    border-right: #111 2px solid;
+    height: 1150px;
+    width: 680px;
+}
+
+
+
+.content_bag{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    flex-basis: 33.33%;
+    max-width: 33.33%;
+    flex-shrink: 0;
+    box-sizing: inherit;
+}
+
+.card{
+    float: left;
+    border: 1px solid #777; 
+    margin-top: 5px;      
+    background: #292727;
+    box-shadow:0px 1px 0px rgba(255,255,255,.1), inset 0px 1px 1px rgba(123, 115, 115, 0.7);
+    border-radius: 6px;}
+.card-image{width: 100%;}
+.card-body{padding: 15px;}
+.card-body-num{font-size: 85%;color: #777;}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load blog_tags %}
+
+{% block main %}
+
+
+  <div id="mainbody">
+      <div class="memories">
+          <div class="line1">
+              <div class="arrow_box memory_main">
+
+                 {% for cate in category %}
+                <div class="content_bag">
+                  <div class="card">
+                    <div class="card-image">
+                        <a href="{{cate.get_posts_url}}"><img src="{% static 'blog/images/memory1.jpg' %}"></a>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{cate.get_posts_url}}">{{ cate.name }}</a>
+                        <div class="card-body-num">
+                          <span> —— 次阅读</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                {% empty %}
+                  暂无文章
+                {% endfor %}
+
+              </div>
+          </div>
+
+{% endblock main %}
+
+{% block toc %}
+      <div class="search">
+        <form class="searchform" method="get" action="#">
+          <input type="text" name="s" value="Search" onfocus="this.value=''" onblur="this.value='Search'">
+        </form>
+      </div>
+      <div class="sunnav">
+        <ul>
+          <li><center><a href="/" target="_blank" title="网站首页">网站首页</a></center></li>
+          <li><center><a href="/cate/2" target="_blank" title="学无止境">学无止境</a></center></li>
+          <li><center><a href="/cate/1" target="_blank" title="人生杂谈">人生杂谈</a></center></li>
+          <li><center><a href="#" target="_blank" title="留言板">留言板</a></center></li>
+        </ul>
+      </div>
+      <div class="tuijian">
+        <h2>博客更新</h2>
+          {% get_next_posts as next_post_list %}
+        <ol>
+            {% for post in next_post_list %}
+              <li><span><strong>{{ post.category }}</strong></span><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+            {% empty %}
+                <span>暂无文章</span>
+            {% endfor %}
+        </ol>
+      </div>
+      <div class="toppic">
+        <h2>图文并茂</h2>
+        <ul>
+          <li><a href="/"><img src="images/k01.jpg">腐女不可怕，就怕腐女会画画！
+            <p>伤不起</p>
+            </a></li>
+          <li><a href="/"><img src="images/k02.jpg">问前任，你还爱我吗？无限戳中泪点~
+            <p>感兴趣</p>
+            </a></li>
+          <li><a href="/"><img src="images/k03.jpg">世上所谓幸福，就是一个笨蛋遇到一个傻瓜。
+            <p>喜欢</p>
+            </a></li>
+        </ul>
+      </div>
+       <div class="clicks">
+        <h2>热门点击</h2>
+        {% get_hots_posts as hots_post_list %}
+        <ol>
+          {% for post in hots_post_list %}
+          <li><span><a href="/">{{ post.category }}</a></span><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+          {% empty %}
+              <span> 暂无文章 </span>
+          {% endfor %}
+        </ol>
+      </div>
+ {% endblock toc %}

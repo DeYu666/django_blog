@@ -1,0 +1,79 @@
+<!doctype html>
+{% load staticfiles %}
+{% load blog_tags %}
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>CockWire.Asa-个人博客</title>
+<link href="{% static 'blog/css/styles.css' %}" rel="stylesheet">
+<link href="{% static 'blog/css/animation.css' %}" rel="stylesheet">
+<!-- 返回顶部调用 begin -->
+<link href="{% static 'blog/css/lrtk.css' %}" rel="stylesheet" />
+<script type="text/javascript" src="{% static 'blog/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'blog/js/js.js' %}"></script>
+<!-- 返回顶部调用 end-->
+<!--[if lt IE 9]>
+<script src="{% static 'blog/js/modernizr.js' %}"></script>
+<![endif]-->
+
+<link href="{% static 'blog/css/view.css' %}" rel="stylesheet">
+<link href="{% static 'blog/css/highlights.css' %}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'blog/css/memory.css' %}">
+
+<script type="text/javascript" src="{% static 'blog/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'blog/js/js.js' %}"></script>
+
+</head>
+<body>
+<header>
+      <div class="row">
+          <div class="logo">
+            <!--  这写logo   -->
+
+            <h1><a href="{% url 'blog:index' %}"><b>Cock.Wire.Asa</b> &amp; Blogger</a></h1>
+
+          </div>
+          <div class="nav">
+           <!--  这写导航栏  -->
+             <nav>
+                <div  class="navigation">
+                  <ul class="menu">
+                    <li><a href="/">网站首页</a></li>
+                    <li><a href="#">关于博主</a></li>
+                    <li><a href="/cate/2">学无止境</a></li>
+                    <li><a href="/cate/1">人生杂谈</a></li>
+                    <li><a href="#">个人日记</a></li>
+                    <li><a href="#">留言板</a></li>
+                </div>
+             </nav>
+
+          </div>
+      </div>
+</header>
+<!--header end-->
+
+{% block main %}
+{% endblock main %}
+
+
+    <aside>
+        {% block toc %}
+        {% endblock toc %}
+
+    </aside>
+  </div>
+  <!--blogs end-->
+</div>
+<!--mainbody end-->
+<footer>
+  <div class="footer-bottom">
+    <p>Copyright 2013 Design by <a href="http://www.yangqq.com">DanceSmile</a></p>
+  </div>
+</footer>
+<!-- jQuery仿腾讯回顶部和建议 代码开始 -->
+<div id="tbox"> <a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a> </div>
+<!-- 代码结束 -->
+
+</body>
+</html>

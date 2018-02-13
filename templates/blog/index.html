@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load blog_tags %}
+
+
+{% block main %}
+  <script type="text/javascript">
+    var n = 0;//图片切换的标记
+    var n2 = 0;
+    var timer;//图片移动的定时器
+    var timer2;
+    window.onload=init;
+    function init(){
+        timer=window.setInterval("movePhoto()",2000);
+        timer2=window.setInterval("moveBg()",2000);
+    }
+
+  function moveBg(){
+    var bg1 = document.getElementById("bg1");
+    n2++;
+    if (n2>=5) {n2=0;}
+    $("#bg1").animate({marginTop: n2*60+"px"});
+    /*bg1.style.marginTop=n2*60+"px";*/
+  }
+    //换图片函数
+    function movePhoto(){
+      var obj = document.getElementById("img1");
+      n++;
+      if(n>=5){n=0;}
+      obj.src="{% static 'blog/images/banner/' %}"+n+".jpg";
+    }
+    //放到大图片上停止移动
+    function stopPhoto(){
+      window.clearInterval(timer);
+      window.clearInterval(timer2);
+    }
+    //恢复移动
+    function removePhoto(){
+      timer=window.setInterval("movePhoto()",2000);
+      timer2=window.setInterval("moveBg()",2000);
+    }
+    //指定到某个图片上
+    function appointPhoto(num){
+      //获得id为img1这个标签
+      var obj = document.getElementById("img1");
+      //改变对象的src属性换图片
+      obj.src="{% static 'blog/images/banner/' %}"+num+".jpg";
+      //清除定时器
+      window.clearInterval(timer);
+
+      var bg1 = document.getElementById("bg1");
+      $("#bg1").animate({marginTop: num*60+"px"});
+      /*bg1.style.marginTop=num*60+"px";*/
+      window.clearInterval(timer2);
+    }
+    //继续移动
+    function continue1(num){
+      n=num;
+      timer=window.setInterval("movePhoto()",2000);
+      n2=num;
+      timer2=window.setInterval("moveBg()",2000);
+    }
+  </script>
+
+
+
+  <div id="mainbody">
+    <div class="banner-bottom">
+      <p>欢迎 浏览 本博客</p>
+    </div>
+    <div class="info">
+      <div class="banner-left">
+        <div class="bannerContent">
+          <img id="img1" src="{% static 'blog/images/banner/0.jpg' %}" onmouseover="stopPhoto()" onmouseout="removePhoto()">
+        </div>
+        <div class="switch-btn-box">
+          <div class="hover-bg" id="bg1"></div>
+          <ul id="switchBtn">
+            <li onmouseover="appointPhoto(0)" onmouseout="continue1(0)">
+              <a href="javascript:;">
+                <img src="{% static 'blog/images/banner/0.jpg' %}" height="50" width="100px">
+              </a>
+            </li>
+            <li onmouseover="appointPhoto(1)" onmouseout="continue1(1)">
+              <a href="javascript:;">
+                <img src="{% static 'blog/images/banner/1.jpg' %}" height="50" width="100px">
+              </a>
+            </li>
+            <li onmouseover="appointPhoto(2)" onmouseout="continue1(2)">
+              <a href="javascript:;">
+                <img src="{% static 'blog/images/banner/2.jpg' %}" height="50" width="100px">
+              </a>
+            </li>
+            <li onmouseover="appointPhoto(3)" onmouseout="continue1(3)">
+              <a href="javascript:;">
+                <img src="{% static 'blog/images/banner/3.jpg' %}" height="50" width="100px">
+              </a>
+            </li>
+            <li onmouseover="appointPhoto(4)" onmouseout="continue1(4)">
+              <a href="javascript:;">
+                <img src="{% static 'blog/images/banner/4.jpg' %}" height="50" width="100px">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="banner-right">
+        <p class="banner-right-text">我就是我，不一样的我！</p>
+      </div>
+    </div>
+    <!--info end-->
+
+
+
+    <div class="blank">
+      <span>博客内容</span>
+    </div>
+    <div class="blogs">
+      {% get_recent_posts as recent_post_list %}
+      <ul class="bloglist">
+        {% for post in recent_post_list %}
+        <li>
+          <div class="arrow_box">
+            <div class="ti"></div>
+            <!--三角形-->
+            <div class="ci"></div>
+            <!--圆形-->
+            <h2 class="title"><a href="{{ post.get_absolute_url }}" target="_blank">{{ post.title }}</a></h2>
+            <ul class="textinfo">
+              <a href="/"><img src="{% static 'blog/images/s1.jpg' %}"></a>
+              <p> {{ post.excerpt }} </p>
+            </ul>
+            <ul class="details">
+              <li class="likes"><a href="#">10</a></li>
+              <li class="comments"><a href="#">34</a></li>
+              <li class="icon-time"><a href="#">{{ post.created_time }}</a></li>
+            </ul>
+          </div>
+          <!--arrow_box end-->
+        </li>
+        {% empty %}
+          <li>
+              <div class="no-post">暂时还没有发布的文章！</div>
+          </li>
+        {% endfor %}
+
+
+      </ul>
+{% endblock main %}
+
+      {% block toc %}
+            <div class="searchBox">
+        <h2>站内搜索</h2>
+        <div class="search-wrap">
+          <form name="" action="#" method="post">
+            <input name="" type="text" id="searchValue" class="search-value input_text" placeholder="请你输入你需要的内容">
+            <input class="input_submit" type="submit" value="搜索">
+          </form>
+        </div>
+      </div>
+
+      <div class="clicks">
+        <h2>热门点击</h2>
+        {% get_hots_posts as hots_post_list %}
+        <ol>
+          {% for post in hots_post_list %}
+          <li><span><a href="/">{{ post.category }}</a></span><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+          {% empty %}
+              <span> 暂无文章 </span>
+          {% endfor %}
+        </ol>
+      </div>
+      <div class="toppic">
+        <h2>友情推荐</h2>
+        <ul>
+          <li><a href="">阿斯达</a></li>
+          <li><a href="">阿斯达</a></li>
+          <li><a href="">阿斯达</a></li>
+          <li><a href="">阿斯达</a></li>
+        </ul>
+      </div>
+      <div class="search">
+        <form class="searchform" method="get" action="#">
+          <input type="text" name="s" value="Search" onfocus="this.value=''" onblur="this.value='Search'">
+        </form>
+      </div>
+      <div class="viny">
+        <dl>
+          <dt class="art"><img src="images/artwork.png" alt="专辑"></dt>
+          <dd class="icon-song"><span></span>南方姑娘</dd>
+          <dd class="icon-artist"><span></span>歌手：赵雷</dd>
+          <dd class="icon-album"><span></span>所属专辑：《赵小雷》</dd>
+          <dd class="icon-like"><span></span><a href="/">喜欢</a></dd>
+          <dd class="music">
+            <audio src="images/nf.mp3" controls></audio>
+          </dd>
+          <!--也可以添加loop属性 音频加载到末尾时，会重新播放-->
+        </dl>
+      </div>
+      {% endblock toc %}
