@@ -18,7 +18,7 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=100)
     cover_image = models.FileField(upload_to="cover_image/%Y/%m/%d/", blank=True)
-    topcate = models.ForeignKey(TopCate, default='0')
+    topcate = models.ForeignKey(TopCate, default='0', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -35,11 +35,11 @@ class Post(models.Model):
     """
     title = models.CharField(max_length=70)
     created_time = models.DateField()
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     cover_image = models.FileField(upload_to="cover_image_son/%Y/%m/%d/", blank=True)
     excerpt = models.CharField(max_length=200, blank=True)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     comments_num = models.IntegerField(blank=True)
     like_num = models.IntegerField(blank=True)
 
